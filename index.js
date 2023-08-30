@@ -93,6 +93,27 @@ app.get('/', (req, res) => {
 })
 */
 
+// Middleware
+const myPersonalMiddleware = (req, res, next) => {
+  console.log("This is my personal middleware")
+  next()
+}
+
+// app.use(myPersonalMiddleware)
+app.use('/loginForm', myPersonalMiddleware)
+
+const validateRegisterUserMiddleware = (req, res, next) => {
+  console.log("This is New User Registration Validation Middleware")
+  if(req.body.name == null || req.body.email == null || req.body.username == null || req.body.password == null || req.body.type == null || req.body.name == '' || req.body.email == '' || req.body.username == '' || req.body.password == '' || req.body.type == '' ){
+    console.log("The fields can't be empy")
+    return res.render('registerForm')
+  }
+
+  next()
+}
+
+app.use('/user/register', validateRegisterUserMiddleware)
+
 const homeController = require('./controllers/home')
 app.get('/', homeController)
 

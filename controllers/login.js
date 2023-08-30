@@ -12,10 +12,24 @@ module.exports = (req, res) => {
    user.findOne({username: username}).then(function(person){
      console.log(person)
     if(person){
-        
+        // decript the password and compare it with the received login information/password from the login form
+        bcrypt.compare(password, person.password, (error, same) => {
+            if(same){
+                res.redirect('/')
+            } else {
+                res.render('loginForm', {
+                    invalidUserError: null,
+                    invalidPasswordError: "Wrong Password"
+                })
+            }
+        })
     }
     else {
         console.log('invalide user')
+        res.render('loginForm', {
+            invalidUserError: "Invalid User",
+            invalidPasswordError: null
+        })
     }
    })
 }
