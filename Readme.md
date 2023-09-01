@@ -57,3 +57,23 @@ please install git scm command line tool from the link below
     > git commit -m "initial commit"
 14. Check the status which file/folder will be added to remote repo
     > git status
+15. Push all your files/folder to the Github
+    > git push -u -f origin "name of your branch"
+
+    e.g.
+    > git push -u -f origin main // use this command for the first time
+
+    if you already pushed your repo then use the simple push command
+    > git push origin main
+
+## Summary of Github Command
+### clone existing project
+    > git clone https://github.com/iftikharafridi/QHO541-Advanced-Database-Systems-S3-2023.git
+### Steps for making existing folder as repo
+> git init
+> git branch -m main
+> git add .
+> git commit -m "Initial Commit"
+> git remote add origin "link to your repository"
+> git push -u -f origin main // First time
+> git push origin main    
