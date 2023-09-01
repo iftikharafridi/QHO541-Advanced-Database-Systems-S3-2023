@@ -1,4 +1,4 @@
-# CW-2-Movies
+# Gifto E-Commerse Website
 This project is for the submission of CW-2 assessment for QHO541 Advanced Database Systems module at Solent University
 
 # Instructions
@@ -77,3 +77,8 @@ please install git scm command line tool from the link below
 > git remote add origin "link to your repository"
 > git push -u -f origin main // First time
 > git push origin main    
+
+
+# Git Pull command for Collobaration project
+> git pull "path to the repo"
+> 
