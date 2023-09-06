@@ -22,6 +22,28 @@ const express = require('express')
 const path = require('path')
 const app = express()
 
+// Express Sessions
+const session = require('express-session')
+
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true,
+  //cookie: { secure: true }
+}))
+
+global.loggedIn = null;
+global.userType = null;
+
+
+
+app.use("*", (req,res,next)=>{
+  // console.log("Session middleware")
+  loggedIn = req.session.userId;
+  userType = req.session.userType;
+  next();
+})
+
 /* 
 Public folder serves the statis files like css, js, pics etc. We will create a public folder and put all our statis files there.
 Just add the below middlewear that let the express which folder contains the static files
@@ -96,25 +118,25 @@ app.get('/', (req, res) => {
 */
 
 // Middleware
-const myPersonalMiddleware = (req, res, next) => {
-  console.log("This is my personal middleware")
-  next()
-}
+// const myPersonalMiddleware = (req, res, next) => {
+//   console.log("This is my personal middleware")
+//   next()
+// }
 
 // app.use(myPersonalMiddleware)
-app.use('/loginForm', myPersonalMiddleware)
+// app.use('/loginForm', myPersonalMiddleware)
 
-const validateRegisterUserMiddleware = (req, res, next) => {
-  console.log("This is New User Registration Validation Middleware")
-  if(req.body.name == null || req.body.email == null || req.body.username == null || req.body.password == null || req.body.type == null || req.body.name == '' || req.body.email == '' || req.body.username == '' || req.body.password == '' || req.body.type == '' ){
-    console.log("The fields can't be empy")
-    return res.render('registerForm')
-  }
+// const validateRegisterUserMiddleware = (req, res, next) => {
+//   console.log("This is New User Registration Validation Middleware")
+//   if(req.body.name == null || req.body.email == null || req.body.username == null || req.body.password == null || req.body.type == null || req.body.name == '' || req.body.email == '' || req.body.username == '' || req.body.password == '' || req.body.type == '' ){
+//     console.log("The fields can't be empy")
+//     return res.render('registerForm')
+//   }
 
-  next()
-}
+//   next()
+// }
 
-app.use('/user/register', validateRegisterUserMiddleware)
+// app.use('/user/register', validateRegisterUserMiddleware)
 
 const homeController = require('./controllers/home')
 app.get('/', homeController)
@@ -198,6 +220,7 @@ app.get('/registerForm', registerFormController)
 
 const errorController = require('./controllers/error')
 app.get('*', errorController)
+
 
 app.listen(4000, () => {
     console.log('Server started on port: 4000')
